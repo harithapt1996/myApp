@@ -20,7 +20,7 @@ pipeline {
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app php artisan key:generate'
 
                     // Copy phpunit.xml to the Docker container
-                    sh 'docker cp /mnt/myApp/phpunit.xml CONTAINER_ID:/var/www/html/phpunit.xml'
+                    sh 'docker cp /mnt/myApp/phpunit.xml fe9bb53d56f5:/var/www/html/phpunit.xml'
 
                     // Run PHPUnit
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app vendor/bin/phpunit -c /var/www/html/phpunit.xml'
