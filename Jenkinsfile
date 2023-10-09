@@ -4,14 +4,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env build'
+                script {
+                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env build'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                sh 'docker-compose run app pwd'
-                sh 'docker-compose run app php artisan test'
+                script {
+                    sh 'docker-compose run -w /var/www/html app pwd'
+                    sh 'docker-compose run -w /var/www/html app php artisan test --log-junit=phpunit.xml'
+                    junit 'phpunit.xml'
+                }
             }
         }
 
