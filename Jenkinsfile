@@ -18,10 +18,7 @@ pipeline {
 
                     // Run Laravel test command with explicit PHPUnit configuration
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app php artisan --env=testing config:cache'
-                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app php artisan --env=testing test --configuration /var/www/html/phpunit.xml --log-junit=phpunit.xml'
-                    
-                    // Print contents of the test directory for debugging
-                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app ls -la tests'
+                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app php artisan --env=testing test --log-junit=phpunit.xml'
 
                     junit 'phpunit.xml'
                 }
