@@ -19,15 +19,21 @@ pipeline {
                     // Generate Laravel application key
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app php artisan key:generate'
 
+                    // Copy phpunit.xml to the Docker container
+                    sh 'docker cp /mnt/myApp/phpunit.xml CONTAINER_ID:/var/www/html/phpunit.xml'
+
                     // Run PHPUnit
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app vendor/bin/phpunit -c /var/www/html/phpunit.xml'
 
-                }
-                post {
-                    always {
-                        // Archive the PHPUnit XML report
-                        junit '**/phpunit.xml'
-                    }
+                    // Modify the PHPUnit XML file to remove invalid attributes
+                    sh "sed -i 's/tests=\"[0-9]*\"//g' /mnt/myApp/phpunit.xml"
+                    sh "sed -i 's/assertions=\"[0-9]*\"//g' /mnt/myApp/phpunit.xml"
+                    sh "sed -i 's/errors=\"[0-9]*\"//g' /mnt/myApp/phpunit.xml"
+                    sh "sed -i 's/failures=\"[0-9]*\"//g' /mnt/myApp/phpunit.xml"
+                    sh "sed -i 's/skipped=\"[0-9]*\"//g' /mnt/myApp/phpunit.xml"
+                    sh "sed -i 's/time=\"[0-9]*.[0-9]*\"//g' /mnt/myApp/phpunit.xml"
+
+                    junit '/mnt/myApp/phpunit.xml'
                 }
             }
         }
