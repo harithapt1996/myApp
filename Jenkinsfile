@@ -23,13 +23,16 @@ pipeline {
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app composer require --dev --with-all-dependencies phpunit/phpunit'
 
                     // Run PHPUnit and generate the XML report
-                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app vendor/bin/phpunit --log-junit=phpunit.xml'
+                    def phpunitCommand = 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app vendor/bin/phpunit --log-junit=phpunit.xml'
+                    
+                    // Execute PHPUnit command and capture exit code
+                    def phpunitExitCode = sh script: phpunitCommand, returnStatus: true
 
-                    // Check if PHPUnit XML file exists and publish JUnit results
-                    if (fileExists('phpunit.xml')) {
+                    // Check if PHPUnit command was successful
+                    if (phpunitExitCode == 0) {
                         junit 'phpunit.xml'
                     } else {
-                        error 'PHPUnit XML file not found.'
+                        error 'PHPUnit tests failed.'
                     }
                 }
             }
