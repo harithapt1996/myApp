@@ -19,8 +19,8 @@ pipeline {
                     // Generate Laravel application key
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app php artisan key:generate'
 
-                    // Install PHPUnit 9.x
-                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app composer require --dev phpunit/phpunit:"^9.5" phpunit/php-code-coverage:"^9.2.29" --ignore-platform-reqs'
+                    // Install PHPUnit 9.x and php-code-coverage 9.x
+                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app composer require --dev phpunit/phpunit:^9.5 phpunit/php-code-coverage:^9.2.29 phpunit/php-file-iterator:^3.0.3 --ignore-platform-reqs'
 
                     // Run PHPUnit
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app vendor/bin/phpunit --log-junit=phpunit.xml'
