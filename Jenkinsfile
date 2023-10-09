@@ -16,8 +16,8 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Deploy your application as needed
-                // This could involve pushing to a registry, deploying to a server, etc.
+                echo 'Deploying...'
+                // Add your deployment steps here
             }
         }
     }
