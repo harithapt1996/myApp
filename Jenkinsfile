@@ -20,7 +20,7 @@ pipeline {
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app php artisan key:generate'
 
                     // Install PHPUnit 9.x and compatible dependencies
-                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app composer require --dev phpunit/phpunit:^9.5 phpunit/php-code-coverage:^9.2.9 phpunit/php-file-iterator:^3.0.3 phpunit/php-invoker:^3.1.1 --ignore-platform-reqs'
+                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app composer require --dev phpunit/phpunit:^9.5 phpunit/php-code-coverage:^9.2.9 phpunit/php-file-iterator:^3.0.3 phpunit/php-invoker:^3.1.1 phpunit/php-text-template:^2.0.2 --ignore-platform-reqs'
 
                     // Run PHPUnit
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app vendor/bin/phpunit --log-junit=phpunit.xml'
