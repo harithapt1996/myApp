@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'docker-compose build'
+                    sh(script: 'docker-compose build', returnStatus: true)
                 }
             }
         }
@@ -13,7 +13,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'docker-compose run app php artisan test'
+                    sh(script: 'docker-compose run app php artisan test', returnStatus: true)
                 }
             }
         }
