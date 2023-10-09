@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker-compose -f /root/docker/myApp/docker-compose.yml build'
+                sh 'docker-compose -f /root/docker/myApp/docker-compose.yml --env-file /root/docker/myApp/.env build'
             }
         }
 
