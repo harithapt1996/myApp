@@ -10,6 +10,7 @@ pipeline {
 
         stage('Test') {
             steps {
+                sh 'docker-compose run app pwd'
                 sh 'docker-compose run app php artisan test'
             }
         }
