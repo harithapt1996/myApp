@@ -16,7 +16,10 @@ pipeline {
                     // Ensure Composer dependencies are installed
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app composer install --ignore-platform-reqs'
 
-                    // Run PHPUnit without Laravel's php artisan test
+                    // Generate Laravel application key
+                    sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app php artisan key:generate'
+
+                    // Run PHPUnit
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app vendor/bin/phpunit --log-junit=phpunit.xml'
 
                     junit 'phpunit.xml'
