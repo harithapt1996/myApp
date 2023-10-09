@@ -13,11 +13,11 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'docker-compose run -w /var/www/html app ls -la'
-                    sh 'docker-compose run -w /var/www/html app php artisan --version'
-                    sh 'docker-compose run -w /var/www/html app cat .env'
-                    sh 'docker-compose run -w /var/www/html app php artisan --env=testing config:cache'
-                    sh 'docker-compose run -w /var/www/html app php artisan --env=testing test --log-junit=phpunit.xml'
+                    sh 'docker-compose run -w /mnt/myApp app ls -la'
+                    sh 'docker-compose run -w /mnt/myApp app php artisan --version'
+                    sh 'docker-compose run -w /mnt/myApp app cat .env'
+                    sh 'docker-compose run -w /mnt/myApp app php artisan --env=testing config:cache'
+                    sh 'docker-compose run -w /mnt/myApp app php artisan --env=testing test --log-junit=phpunit.xml'
                     junit 'phpunit.xml'
                 }
             }
