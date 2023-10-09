@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN composer install --no-scripts
+# Copy phpunit.xml from the build context to /var/www/html
+COPY phpunit.xml /var/www/html/
 
 COPY . /var/www/html
 
