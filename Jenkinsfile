@@ -4,26 +4,20 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    sh(script: 'docker-compose build', returnStatus: true)
-                }
+                sh 'docker-compose build'
             }
         }
 
         stage('Test') {
             steps {
-                script {
-                    sh(script: 'docker-compose run app php artisan test', returnStatus: true)
-                }
+                sh 'docker-compose run app php artisan test'
             }
         }
 
         stage('Deploy') {
             steps {
-                script {
-                    // Deploy your application as needed
-                    // This could involve pushing to a registry, deploying to a server, etc.
-                }
+                // Deploy your application as needed
+                // This could involve pushing to a registry, deploying to a server, etc.
             }
         }
     }
