@@ -22,6 +22,14 @@ pipeline {
                     // Run PHPUnit
                     sh 'docker-compose -f /mnt/myApp/docker-compose.yml --env-file /mnt/myApp/.env run -w /var/www/html app vendor/bin/phpunit --log-junit=phpunit.xml'
 
+                    // Modify the PHPUnit XML file to remove invalid attributes
+                    sh "sed -i 's/tests=\"[0-9]*\"//g' phpunit.xml"
+                    sh "sed -i 's/assertions=\"[0-9]*\"//g' phpunit.xml"
+                    sh "sed -i 's/errors=\"[0-9]*\"//g' phpunit.xml"
+                    sh "sed -i 's/failures=\"[0-9]*\"//g' phpunit.xml"
+                    sh "sed -i 's/skipped=\"[0-9]*\"//g' phpunit.xml"
+                    sh "sed -i 's/time=\"[0-9]*.[0-9]*\"//g' phpunit.xml"
+
                     junit 'phpunit.xml'
                 }
             }
