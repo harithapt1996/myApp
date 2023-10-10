@@ -26,15 +26,15 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            script {
-                // Clean up (stop and remove containers)
-                dir('/mnt/myApp') {
-                    sh 'docker-compose down'
-                }
-            }
-        }
-    }
+    // Commented out the 'post' section to skip cleanup
+    // post {
+    //     always {
+    //         script {
+    //             // Clean up (stop and remove containers)
+    //             dir('/mnt/myApp') {
+    //                 sh 'docker-compose down'
+    //             }
+    //         }
+    //     }
+    // }
 }
