@@ -30,4 +30,11 @@ pipeline {
             }
         }
     }
+
+    // Add a new stage for echo statement
+    stage('Show Change') {
+        steps {
+            echo 'This is a change in the Jenkinsfile!'
+        }
+    }
 }
