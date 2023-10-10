@@ -12,7 +12,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    dir('/mnt/myApp') {
+                        sh 'docker-compose up -d'
+                    }
                 }
             }
         }
@@ -22,7 +24,9 @@ pipeline {
         always {
             script {
                 // Clean up (stop and remove containers)
-                sh 'docker-compose down'
+                dir('/mnt/myApp') {
+                    sh 'docker-compose down'
+                }
             }
         }
     }
