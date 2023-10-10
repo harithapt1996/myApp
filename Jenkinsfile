@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    docker.build("your-laravel-app")
+                    docker.build("laravel")
                 }
             }
         }
