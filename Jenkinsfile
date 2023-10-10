@@ -5,14 +5,18 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    docker.build("laravel")
+                    dir('/mnt/myApp') {
+                        sh 'docker build -t your-laravel-app .'
+                    }
                 }
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    dir('/mnt/myApp') {
+                        sh 'docker-compose down'
+                    }
                 }
             }
         }
@@ -21,8 +25,7 @@ pipeline {
     post {
         always {
             script {
-                // Clean up (stop and remove containers)
-                sh 'docker-compose down'
+                // Additional cleanup or actions if needed
             }
         }
     }
