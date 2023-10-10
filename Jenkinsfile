@@ -18,6 +18,13 @@ pipeline {
                 }
             }
         }
+        
+        // Add a new stage for echo statement
+        stage('Show Change') {
+            steps {
+                echo 'This is a change in the Jenkinsfile!'
+            }
+        }
     }
 
     post {
@@ -28,13 +35,6 @@ pipeline {
                     sh 'docker-compose down'
                 }
             }
-        }
-    }
-
-    // Add a new stage for echo statement
-    stage('Show Change') {
-        steps {
-            echo 'This is a change in the Jenkinsfile!'
         }
     }
 }
